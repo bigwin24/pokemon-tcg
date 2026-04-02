@@ -33,6 +33,8 @@ export async function getCards({
     next: { revalidate: 3600 }, // 1시간 캐시
   });
 
+  console.log("카드목록: ", res);
+
   if (!res.ok) throw new Error("카드 목록을 불러오지 못했습니다");
 
   return res.json();
@@ -54,7 +56,7 @@ export async function getCard(id: string): Promise<PokemonCard> {
 // 인기 카드 (시세 높은 순) — 메인 페이지용
 export async function getTopPricedCards(limit = 10): Promise<PokemonCard[]> {
   const res = await fetch(
-    `${BASE_URL}/cards?q=tcgplayer.prices.holofoil.market:[10 TO *]&orderBy=-tcgplayer.prices.holofoil.market&pageSize=${limit}`,
+    `${BASE_URL}/cards?q=rarity:"Rare Secret"&pageSize=25`,
     {
       headers,
       next: { revalidate: 3600 },
@@ -64,7 +66,14 @@ export async function getTopPricedCards(limit = 10): Promise<PokemonCard[]> {
   if (!res.ok) return [];
 
   const json: CardsResponse = await res.json();
-  return json.data;
+  return json.data
+    .filter((card) => card.tcgplayer?.prices?.holofoil?.market)
+    .sort((a, b) => {
+      const aPrice = a.tcgplayer?.prices?.holofoil?.market ?? 0;
+      const bPrice = b.tcgplayer?.prices?.holofoil?.market ?? 0;
+      return bPrice - aPrice;
+    })
+    .slice(0, limit);
 }
 
 // 세트 목록 조회 — 필터용
