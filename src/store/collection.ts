@@ -1,13 +1,12 @@
-// src/store/collection.ts
 "use client";
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { PokemonCard } from "@/types/pokemon";
+import type { Card } from "@/types/cards/card";
 
 interface CollectionStore {
-  favorites: PokemonCard[];
-  addFavorite: (card: PokemonCard) => void;
+  favorites: Card[];
+  addFavorite: (card: Card) => void;
   removeFavorite: (cardId: string) => void;
   isFavorite: (cardId: string) => boolean;
   clearAll: () => void;
