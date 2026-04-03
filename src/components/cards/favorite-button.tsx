@@ -3,10 +3,10 @@
 import { Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCollectionStore } from "@/store/collection";
-import type { PokemonCard } from "@/types/pokemon";
+import type { Card } from "@/types/cards/card";
 import { cn } from "@/lib/utils";
 
-export function FavoriteButton({ card }: { card: PokemonCard }) {
+export function FavoriteButton({ card }: { card: Card }) {
   const { isFavorite, addFavorite, removeFavorite } = useCollectionStore();
   const favorited = isFavorite(card.id);
 

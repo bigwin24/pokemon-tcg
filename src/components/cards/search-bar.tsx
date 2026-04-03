@@ -22,7 +22,7 @@ export function SearchBar({ defaultValue }: { defaultValue?: string }) {
         if (newValue) params.set("q", newValue);
         router.push(`${pathname}?${params.toString()}`);
       });
-    }, 300);
+    }, 500);
 
     return () => clearTimeout(timeout);
   };

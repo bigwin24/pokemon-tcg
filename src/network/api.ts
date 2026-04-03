@@ -1,4 +1,4 @@
-import type { PokemonCard, CardsResponse } from "@/types/pokemon";
+import type { Card, CardsResponse } from "@/types/cards/card";
 
 const BASE_URL = "https://api.pokemontcg.io/v2";
 
@@ -41,7 +41,7 @@ export async function getCards({
 }
 
 // 단일 카드 조회
-export async function getCard(id: string): Promise<PokemonCard> {
+export async function getCard(id: string): Promise<Card> {
   const res = await fetch(`${BASE_URL}/cards/${id}`, {
     headers,
     next: { revalidate: 3600 },
@@ -54,7 +54,7 @@ export async function getCard(id: string): Promise<PokemonCard> {
 }
 
 // 인기 카드 (시세 높은 순) — 메인 페이지용
-export async function getTopPricedCards(limit = 10): Promise<PokemonCard[]> {
+export async function getTopPricedCards(limit = 10): Promise<Card[]> {
   const res = await fetch(
     `${BASE_URL}/cards?q=rarity:"Rare Secret"&pageSize=25`,
     {
@@ -66,11 +66,12 @@ export async function getTopPricedCards(limit = 10): Promise<PokemonCard[]> {
   if (!res.ok) return [];
 
   const json: CardsResponse = await res.json();
+
   return json.data
-    .filter((card) => card.tcgplayer?.prices?.holofoil?.market)
+    .filter((card) => card.tcgplayer?.prices.holofoil?.market)
     .sort((a, b) => {
-      const aPrice = a.tcgplayer?.prices?.holofoil?.market ?? 0;
-      const bPrice = b.tcgplayer?.prices?.holofoil?.market ?? 0;
+      const aPrice = a.tcgplayer?.prices.holofoil.market ?? 0;
+      const bPrice = b.tcgplayer?.prices.holofoil.market ?? 0;
       return bPrice - aPrice;
     })
     .slice(0, limit);

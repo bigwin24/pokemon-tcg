@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import * as THREE from "three";
+import cardBackImg from "@/assets/card-back.png";
 
 interface Props {
   imageUrl: string;
@@ -25,9 +26,9 @@ export function Card3DViewer({ imageUrl, rarity }: Props) {
   const mouseRef = useRef({ x: 0, y: 0 });
   const cardRef = useRef<THREE.Mesh | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  const [isFlipped, setIsFlipped] = useState(false);
   const flipRef = useRef(false);
   const flipAngleRef = useRef(0);
+  const isCardFlippedRef = useRef(false);
 
   const intensity = holoIntensity[rarity] ?? 0.2;
 
@@ -56,6 +57,9 @@ export function Card3DViewer({ imageUrl, rarity }: Props) {
     // 카드 앞면 텍스처
     const loader = new THREE.TextureLoader();
     const texture = loader.load(imageUrl);
+
+    // 카드 뒷면 텍스처
+    const backTexture = loader.load(cardBackImg.src);
 
     // 홀로그램 효과용 ShaderMaterial
     const material = new THREE.ShaderMaterial({
@@ -103,9 +107,11 @@ export function Card3DViewer({ imageUrl, rarity }: Props) {
 
     // 카드 뒷면 (검정 + 뒷면 텍스처 or 단색)
     const backMaterial = new THREE.MeshStandardMaterial({
+      map: backTexture,
       color: 0x1a1a2e,
       roughness: 0.3,
       metalness: 0.6,
+      side: THREE.DoubleSide,
     });
 
     const card = new THREE.Mesh(geometry, material);
@@ -146,18 +152,23 @@ export function Card3DViewer({ imageUrl, rarity }: Props) {
         flipAngleRef.current += 0.08;
         if (cardRef.current) {
           cardRef.current.rotation.y = flipAngleRef.current;
-          // 뒤집히는 순간 머티리얼 교체
-          if (
-            flipAngleRef.current > Math.PI / 2 &&
-            cardRef.current.material === material
-          ) {
-            cardRef.current.material = backMaterial;
+          // 뒤집히는 중간 지점에서 머티리얼 교체
+          if (flipAngleRef.current > Math.PI / 2) {
+            const targetMaterial = isCardFlippedRef.current
+              ? material
+              : backMaterial;
+            if (cardRef.current.material !== targetMaterial) {
+              cardRef.current.material = targetMaterial;
+            }
           }
-          if (flipAngleRef.current > Math.PI) {
+          if (flipAngleRef.current >= Math.PI) {
             flipRef.current = false;
             flipAngleRef.current = 0;
+            isCardFlippedRef.current = !isCardFlippedRef.current;
             cardRef.current.rotation.y = 0;
-            cardRef.current.material = material;
+            cardRef.current.material = isCardFlippedRef.current
+              ? backMaterial
+              : material;
           }
         }
       }
@@ -186,7 +197,6 @@ export function Card3DViewer({ imageUrl, rarity }: Props) {
   const handleFlip = () => {
     if (flipRef.current) return;
     flipRef.current = true;
-    setIsFlipped((p) => !p);
   };
 
   return (

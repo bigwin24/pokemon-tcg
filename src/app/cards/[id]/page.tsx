@@ -1,9 +1,7 @@
-import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Heart, ExternalLink } from "lucide-react";
+import { ArrowLeft, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
 import { getCard, generatePriceHistory } from "@/network/api";
 import { PriceChart } from "@/components/charts/price-chart";
 import { Card3DViewer } from "@/components/cards/card-3d-viewer";

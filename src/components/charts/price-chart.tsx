@@ -9,7 +9,7 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
-import type { PriceHistory } from "@/types/pokemon";
+import type { PriceHistory } from "@/types/cards/card";
 
 interface Props {
   data: PriceHistory[];

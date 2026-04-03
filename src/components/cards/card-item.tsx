@@ -6,11 +6,11 @@ import Link from "next/link";
 import { Heart } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useCollectionStore } from "@/store/collection";
-import type { PokemonCard } from "@/types/pokemon";
+import type { Card } from "@/types/cards/card";
 import { cn } from "@/lib/utils";
 
 interface Props {
-  card: PokemonCard;
+  card: Card;
 }
 
 // 레어리티별 테두리 색상
@@ -34,7 +34,7 @@ function formatPrice(price: number | null | undefined) {
 }
 
 // 카드의 대표 시세 추출
-function getMarketPrice(card: PokemonCard) {
+function getMarketPrice(card: Card) {
   const prices = card.tcgplayer?.prices;
   if (!prices) return null;
   return (
