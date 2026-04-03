@@ -1,12 +1,7 @@
-import type { Card, CardsResponse } from "@/types/cards/card";
-
-const BASE_URL = "https://api.pokemontcg.io/v2";
-
-const headers = {
-  "X-Api-Key": process.env.POKEMON_TCG_API_KEY ?? "",
-};
-
 // 카드 목록 조회 (검색 + 페이지네이션)
+import type { Card, CardsResponse } from "@/types/cards/card";
+import { BASE_URL, headers } from "../settings";
+
 export async function getCards({
   query = "",
   page = 1,
@@ -75,18 +70,6 @@ export async function getTopPricedCards(limit = 10): Promise<Card[]> {
       return bPrice - aPrice;
     })
     .slice(0, limit);
-}
-
-// 세트 목록 조회 — 필터용
-export async function getSets() {
-  const res = await fetch(`${BASE_URL}/sets?orderBy=-releaseDate`, {
-    headers,
-    next: { revalidate: 86400 }, // 24시간 캐시 (세트는 자주 안 바뀜)
-  });
-
-  if (!res.ok) throw new Error("세트 목록을 불러오지 못했습니다");
-
-  return res.json();
 }
 
 // 시세 히스토리 시뮬레이션

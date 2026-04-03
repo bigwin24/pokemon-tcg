@@ -39,7 +39,7 @@ export function SearchBar({ defaultValue }: { defaultValue?: string }) {
       <Input
         value={value}
         onChange={handleChange}
-        placeholder="Pikachu, Charizard..."
+        placeholder="Base, XY, Perfect Order..."
         className="pl-9"
       />
     </div>

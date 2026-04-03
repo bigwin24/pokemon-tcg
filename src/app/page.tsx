@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { TrendingUp, Database, Layers } from "lucide-react";
-import { getTopPricedCards, getCards } from "@/network/api";
+import { getTopPricedCards, getCards } from "@/network/card/api";
 import { CardItem } from "@/components/cards/card-item";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -55,6 +55,8 @@ async function TopCards() {
 async function LatestCards() {
   const { data: cards } = await getCards({ pageSize: 10 });
 
+  console.log("최신카드: ", cards);
+
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
       {cards.map((card) => (
@@ -78,7 +80,7 @@ export default async function HomePage() {
       {/* 요약 카드 */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <StatCard icon={Database} label="총 카드 수" value="18,000+" />
-        <StatCard icon={Layers} label="총 세트 수" value="150+" />
+        <StatCard icon={Layers} label="총 확장팩 수" value="150+" />
         <StatCard icon={TrendingUp} label="오늘 업데이트" value="실시간" />
       </div>
 

@@ -1,4 +1,4 @@
-import { getCards } from "@/network/api";
+import { getCards } from "@/network/card/api";
 import { CardItem } from "@/components/cards/card-item";
 import { MarketChart } from "@/components/charts/market-chart";
 

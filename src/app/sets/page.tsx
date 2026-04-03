@@ -1,8 +1,8 @@
 import { Suspense } from "react";
-import { getCards } from "@/network/card/api";
-import { CardItem } from "@/components/cards/card-item";
+import { getSets } from "@/network/sets/api";
 import { Skeleton } from "@/components/ui/skeleton";
-import { SearchBar } from "@/components/cards/search-bar";
+import { SearchBar } from "@/components/sets/search-bar";
+import { SetItem } from "@/components/sets/set-item";
 
 interface PageProps {
   searchParams: Promise<{
@@ -22,11 +22,13 @@ function CardGridSkeleton() {
 }
 
 async function CardGrid({ query, page }: { query: string; page: number }) {
-  const { data: cards, totalCount } = await getCards({
-    query: query ? `name:${query}*` : "",
-    page,
-    pageSize: 20,
-  });
+  //   const { data: cards, totalCount } = await getSets({
+  //     query: query ? `name:${query}*` : "",
+  //     page,
+  //     pageSize: 20,
+  //   });
+
+  const { data: cards, totalCount } = await getSets();
 
   if (cards.length === 0) {
     return (
@@ -49,14 +51,14 @@ async function CardGrid({ query, page }: { query: string; page: number }) {
       </p>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
         {cards.map((card) => (
-          <CardItem key={card.id} card={card} />
+          <SetItem key={card.id} set={card} />
         ))}
       </div>
     </div>
   );
 }
 
-export default async function CardsPage({ searchParams }: PageProps) {
+export default async function SetsPage({ searchParams }: PageProps) {
   const { q, page: pageParam } = await searchParams; // await 추가
   const query = q ?? "";
   const page = Number(pageParam ?? 1);
@@ -64,9 +66,9 @@ export default async function CardsPage({ searchParams }: PageProps) {
   return (
     <div className="p-6 space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">카드 검색</h1>
+        <h1 className="text-2xl font-bold">확장팩 검색</h1>
         <p className="text-muted-foreground text-sm mt-1">
-          포켓몬 이름으로 검색하세요
+          확장팩 이름으로 검색하세요
         </p>
       </div>
 

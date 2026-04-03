@@ -1,4 +1,3 @@
-// src/components/layout/sidebar.tsx
 "use client";
 
 import Link from "next/link";
@@ -9,6 +8,7 @@ import { cn } from "@/lib/utils";
 const navItems = [
   { href: "/", label: "대시보드", icon: LayoutDashboard },
   { href: "/cards", label: "카드 검색", icon: Search },
+  { href: "/sets", label: "확장팩 검색", icon: Search },
   { href: "/market", label: "시장 분석", icon: TrendingUp },
   { href: "/collection", label: "내 컬렉션", icon: Heart },
 ];

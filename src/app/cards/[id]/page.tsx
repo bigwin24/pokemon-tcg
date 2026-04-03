@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { getCard, generatePriceHistory } from "@/network/api";
+import { getCard, generatePriceHistory } from "@/network/card/api";
 import { PriceChart } from "@/components/charts/price-chart";
 import { Card3DViewer } from "@/components/cards/card-3d-viewer";
 import { FavoriteButton } from "@/components/cards/favorite-button";
@@ -119,7 +119,7 @@ export default async function CardDetailPage({ params }: Props) {
               </div>
             )}
             <div className="flex justify-between">
-              <span className="text-muted-foreground">세트</span>
+              <span className="text-muted-foreground">확장팩</span>
               <span>
                 {card.set.series} — {card.set.name}
               </span>

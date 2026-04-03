@@ -13,3 +13,11 @@ export interface Set {
   updatedAt: string;
   images: Images;
 }
+
+export interface SetsResponse {
+  data: Set[];
+  page: number;
+  pageSize: number;
+  count: number;
+  totalCount: number;
+}
