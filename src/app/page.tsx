@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { TrendingUp, Database, Layers } from "lucide-react";
-import { getTopPricedCards, getCards } from "@/network/card/api";
+import { getTopPricedCards, getCards } from "@/network/card/action";
 import { CardItem } from "@/components/cards/card-item";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -54,8 +54,6 @@ async function TopCards() {
 // 최신 카드 섹션 — Server Component
 async function LatestCards() {
   const { data: cards } = await getCards({ pageSize: 10 });
-
-  console.log("최신카드: ", cards);
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">

@@ -198,7 +198,8 @@ export function Card3DViewer({ imageUrl, rarity }: Props) {
 
   const handleFlip = () => {
     if (flipRef.current) return;
-    flipRef.current = true;
+    //TODO: 카드 뒷면 이미지 확정될떄까지 플립 기능 비활성화
+    // flipRef.current = true;
   };
 
   return (

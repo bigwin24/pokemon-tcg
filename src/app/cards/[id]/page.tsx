@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { getCard, generatePriceHistory } from "@/network/card/api";
+import { getCard, generatePriceHistory } from "@/network/card/action";
 import { PriceChart } from "@/components/charts/price-chart";
 import { Card3DViewer } from "@/components/cards/card-3d-viewer";
 import { FavoriteButton } from "@/components/cards/favorite-button";

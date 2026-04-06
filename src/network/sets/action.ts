@@ -1,5 +1,5 @@
 import { BASE_URL, headers } from "../settings";
-import type { Set, SetsResponse } from "@/types/sets/set";
+import type { SetsResponse, Set } from "@/types/sets/set";
 
 // 확장팩 목록 조회 — 필터용
 export async function getSets() {
@@ -11,6 +11,19 @@ export async function getSets() {
   if (!res.ok) throw new Error("확장팩 목록을 불러오지 못했습니다");
 
   const data: SetsResponse = await res.json();
+
+  return data;
+}
+
+// 확장팩 목록 조회 — 필터용
+export async function getSet({ id }: { id: string }) {
+  const res = await fetch(`${BASE_URL}/sets/${id}`, {
+    headers,
+  });
+
+  if (!res.ok) throw new Error("확장팩을 불러오지 못했습니다");
+
+  const { data }: { data: Set } = await res.json();
 
   return data;
 }

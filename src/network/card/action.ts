@@ -28,8 +28,6 @@ export async function getCards({
     next: { revalidate: 3600 }, // 1시간 캐시
   });
 
-  console.log("카드목록: ", res);
-
   if (!res.ok) throw new Error("카드 목록을 불러오지 못했습니다");
 
   return res.json();
