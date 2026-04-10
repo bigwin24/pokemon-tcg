@@ -1,23 +1,60 @@
-import { getCards } from "@/network/card/action";
+import { getCards } from "@/network/card/api";
 import { CardItem } from "@/components/cards/card-item";
 import { MarketChart } from "@/components/charts/market-chart";
 
 async function getMarketData() {
-  const [holoData, exData, vData] = await Promise.all([
-    getCards({ query: 'rarity:"Rare Holo"', pageSize: 20 }),
-    getCards({ query: 'rarity:"Rare Ultra"', pageSize: 20 }),
-    getCards({ query: 'rarity:"Rare Holo VMAX"', pageSize: 20 }),
+  const [
+    commonData,
+    uncommonData,
+    rareData,
+    holoData,
+    ultraData,
+    vmaxData,
+    secretData,
+    rainbowData,
+  ] = await Promise.all([
+    getCards({ query: 'rarity:"Common"', pageSize: 10 }),
+    getCards({ query: 'rarity:"Uncommon"', pageSize: 10 }),
+    getCards({ query: 'rarity:"Rare"', pageSize: 10 }),
+    getCards({ query: 'rarity:"Rare Holo"', pageSize: 10 }),
+    getCards({ query: 'rarity:"Rare Ultra"', pageSize: 10 }),
+    getCards({ query: 'rarity:"Rare Holo VMAX"', pageSize: 10 }),
+    getCards({ query: 'rarity:"Rare Secret"', pageSize: 10 }),
+    getCards({ query: 'rarity:"Rare Rainbow"', pageSize: 10 }),
   ]);
-  return { holoData, exData, vData };
+  return {
+    commonData,
+    uncommonData,
+    rareData,
+    holoData,
+    ultraData,
+    vmaxData,
+    secretData,
+    rainbowData,
+  };
 }
 
 export default async function MarketPage() {
-  const { holoData, exData, vData } = await getMarketData();
+  const {
+    commonData,
+    uncommonData,
+    rareData,
+    holoData,
+    ultraData,
+    vmaxData,
+    secretData,
+    rainbowData,
+  } = await getMarketData();
 
   const sections = [
-    { label: "⚡ Rare Holo TOP", cards: holoData.data },
-    { label: "💎 Ultra Rare TOP", cards: exData.data },
-    { label: "👑 VMAX TOP", cards: vData.data },
+    { label: "⚡ Common TOP 10", cards: commonData.data },
+    { label: "⚡ Uncommon TOP 10", cards: uncommonData.data },
+    { label: "⚡ Rare TOP 10", cards: rareData.data },
+    { label: "⚡ Rare Holo TOP 10", cards: holoData.data },
+    { label: "💎 Ultra Rare TOP 10", cards: ultraData.data },
+    { label: "👑 VMAX TOP 10", cards: vmaxData.data },
+    { label: "👑 Secret TOP 10", cards: secretData.data },
+    { label: "👑 Rainbow TOP 10", cards: rainbowData.data },
   ];
 
   return (
@@ -47,7 +84,7 @@ export default async function MarketPage() {
       </div>
 
       {/* 섹션별 카드 목록 */}
-      {sections.map(({ label, cards }) => (
+      {sections.reverse().map(({ label, cards }) => (
         <section key={label}>
           <h2 className="text-lg font-semibold mb-4">{label}</h2>
           {cards.length > 0 ? (

@@ -210,7 +210,8 @@ export function Card3DViewer({ imageUrl, rarity }: Props) {
         onClick={handleFlip}
       />
       <p className="text-xs text-center text-muted-foreground">
-        마우스를 올려 홀로그램 효과 • 클릭하면 플립
+        {/* 마우스를 올려 홀로그램 효과 • 클릭하면 플립 */}
+        마우스를 올려 홀로그램 효과
       </p>
     </div>
   );

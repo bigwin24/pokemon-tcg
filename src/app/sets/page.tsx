@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { getSets } from "@/network/sets/action";
+import { getSets } from "@/network/sets/api";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SearchBar } from "@/components/sets/search-bar";
 import { SetItem } from "@/components/sets/set-item";

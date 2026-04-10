@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { TrendingUp, Database, Layers } from "lucide-react";
-import { getTopPricedCards, getCards } from "@/network/card/action";
+import { getTopPricedCards, getCards } from "@/network/card/api";
 import { CardItem } from "@/components/cards/card-item";
 import { Skeleton } from "@/components/ui/skeleton";
 

@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { getSet } from "@/network/sets/action";
+import { getSet } from "@/network/sets/api";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CardGridInfinite } from "@/components/cards/card-grid-infinite";
 import { fetchCardsByQuery } from "@/app/cards/actions";

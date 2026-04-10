@@ -1,6 +1,6 @@
 "use server";
 
-import { getCards } from "@/network/card/action";
+import { getCards } from "@/network/card/api";
 import type { Card } from "@/types/cards/card";
 
 const PAGE_SIZE = 20;
