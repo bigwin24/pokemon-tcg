@@ -2,7 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Search, TrendingUp, Heart } from "lucide-react";
+import {
+  LayoutDashboard,
+  Search,
+  TrendingUp,
+  Heart,
+  MapPin,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -11,6 +17,7 @@ const navItems = [
   { href: "/sets", label: "확장팩 검색", icon: Search },
   { href: "/market", label: "시장 분석", icon: TrendingUp },
   { href: "/collection", label: "내 컬렉션", icon: Heart },
+  { href: "/stores", label: "판매처 지도", icon: MapPin },
 ];
 
 export function Sidebar() {
